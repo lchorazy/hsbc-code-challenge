@@ -1,0 +1,65 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1
+      author: lukasz.chorazy
+      changes:
+        - createTable:
+            tableName: user
+            columns:
+              - column:
+                  name: id
+                  type: int
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+              - column:
+                  name: username
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+        - createTable:
+            tableName: post
+            columns:
+              - column:
+                  name: id
+                  type: int
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+              - column:
+                  name: user_id
+                  type: int
+                  constraints:
+                    foreignKeyName: post_user_fk
+                    references: user(id)
+              - column:
+                  name: message
+                  type: varchar(140)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: created
+                  type: datetime
+                  constraints:
+                    nullable: false
+        - createTable:
+            tableName: db_follow
+            columns:
+              - column:
+                  name: id
+                  type: int
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+              - column:
+                  name: user_id
+                  type: int
+                  constraints:
+                    foreignKeyName: following_user_fk
+                    references: user(id)
+              - column:
+                  name: followed_user_id
+                  type: int
+                  constraints:
+                    foreignKeyName: followed_user_fk
+                    references: user(id)
